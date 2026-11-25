@@ -342,7 +342,7 @@ def apply_to_jobs(page, config, dry_run=False, force_rerun=False):
     applied_urls = load_applied_urls()
 
     daily_limit = config.get("daily_apply_limit", 100)
-    keywords = config.get("keywords", ["SAP ABAP Consultant", "SAP ABAP Developer", "ABAP on HANA", "SAP S/4HANA ABAP"])
+    keywords = config.get("keywords", ["SAP ABAP Developer", "SAP ABAP Consultant"])
     negative_keywords = config.get("negative_keywords", ["Java", "Spring", "C++", ".NET", "ASP.NET", "C#", "PHP", "Angular", "Ruby", "Android", "iOS"])
     locations = config.get("locations", ["Bangalore"])
     exp = config.get("experience_years", 2)
@@ -419,6 +419,12 @@ def apply_to_jobs(page, config, dry_run=False, force_rerun=False):
                             continue
 
                         title = title_el.inner_text().strip()
+
+                        if not is_approved_sap_abap_role(title, config):
+                            print(f"[ROLE FILTER] Skipped non-approved role: {title} @ {company_el.inner_text().strip() if company_el else 'Unknown'}")
+                            log_skipped(title, company_el.inner_text().strip() if company_el else "Unknown", title_el.get_attribute("href") or "", "Role is not SAP ABAP Developer or SAP ABAP Consultant")
+                            continue
+
                         company = company_el.inner_text().strip() if company_el else "Unknown"
                         location_text = loc_el.inner_text().strip() if loc_el else loc
                         job_url = title_el.get_attribute("href")
@@ -554,6 +560,25 @@ def load_clean_storage_state():
     ]
     state_data["cookies"] = clean_cookies
     return state_data
+
+def is_approved_sap_abap_role(title, config):
+    """Return True only for explicitly approved SAP ABAP role titles."""
+    if not title:
+        return False
+
+    normalized = " ".join(title.lower().replace("/", " ").replace("-", " ").split())
+
+    approved_roles = config.get("approved_job_roles", [
+        "SAP ABAP Developer",
+        "SAP ABAP Consultant",
+    ])
+
+    for role in approved_roles:
+        role_normalized = " ".join(role.lower().replace("/", " ").replace("-", " ").split())
+        if role_normalized in normalized:
+            return True
+
+    return False
 
 def main():
     parser = argparse.ArgumentParser(description="Automated Daily Naukri Profile Booster & Job Applicator")

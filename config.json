@@ -51,17 +51,12 @@
     ]
   },
   "keywords": [
-    "SAP ABAP Consultant",
     "SAP ABAP Developer",
-    "ABAP on HANA",
-    "SAP Fiori ABAP",
-    "SAP ABAP RICEF",
-    "SAP Workflow Developer",
-    "SAP OData Developer",
-    "SAP CDS Views",
-    "SAP MM ABAP",
-    "SAP FI ABAP",
-    "SAP S/4HANA ABAP"
+    "SAP ABAP Consultant"
+  ],
+  "approved_job_roles": [
+    "SAP ABAP Developer",
+    "SAP ABAP Consultant"
   ],
   "negative_keywords": [
     "Java",
@@ -80,7 +75,7 @@
   ],
   "experience_years": 2,
   "daily_apply_limit": 25,
-  "dry_run": false,
+  "dry_run": true,
   "enable_profile_boost": true,
   "headless": false,
   "slow_mo_ms": 300,
