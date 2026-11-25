@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Naukri Automation Dashboard - Gnana Kumar S</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --primary: #38bdf8;
+            --accent: #818cf8;
+            --success: #34d399;
+            --warning: #fbbf24;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 30px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(129, 140, 248, 0.08) 0%, transparent 40%);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        }
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 10px;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .table-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(12px);
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        th, td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            color: var(--text-sub);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+        .score-high {
+            background: rgba(52, 211, 153, 0.2);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+        .badge-success {
+            background: rgba(56, 189, 248, 0.2);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+        .badge-info {
+            background: rgba(129, 140, 248, 0.2);
+            color: #818cf8;
+        }
+        .tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.08);
+            color: #cbd5e1;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            margin-right: 4px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .btn-apply {
+            background: linear-gradient(135deg, #38bdf8, #0284c7);
+            color: #ffffff;
+        }
+        .btn-apply:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #f1f5f9;
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Naukri Job Intelligence & Automation Dashboard</h1>
+                <div class="subtitle">Candidate: <strong>Gnana Kumar S</strong> | SAP ABAP Consultant | Core ABAP | RICEF | CDS Views | OData | ABAP on HANA</div>
+            </div>
+            <div style="text-align: right;">
+                <div style="background: rgba(52, 211, 153, 0.15); border: 1px solid rgba(52, 211, 153, 0.3); color: #34d399; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                    <span style="width: 8px; height: 8px; background: #34d399; border-radius: 50%; display: inline-block;"></span> LIVE REFRESHED: November 25, 2026 - 11:21 AM
+                </div>
+            </div>
+        </header>
+
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Auto-Applied Today</div>
+                <div class="stat-value">25</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Recommended External Jobs</div>
+                <div class="stat-value" style="color: var(--accent);">14</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Profile Visibility Status</div>
+                <div class="stat-value" style="color: var(--success); font-size: 1.3rem; margin-top: 15px;">🟢 Active Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">DevOps & Backend Ratio</div>
+                <div class="stat-value" style="font-size: 1.4rem; color: #f472b6; margin-top: 15px;">
+                    0 DevOps / 0 Backend
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">🌟 High-Priority External Jobs (Manual Apply Recommended)</div>
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Match Score</th>
+                        <th>Job Title</th>
+                        <th>Company</th>
+                        <th>Skill Tags</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+        <tr>
+            <td><span class="badge score-high">85% Match</span></td>
+            <td><strong>Enterprise Platform Advisor</strong></td>
+            <td>Accenture</td>
+            <td><span class="tag">Platform</span></td>
+            <td><a href="https://www.naukri.com/job-listings-enterprise-platform-advisor-accenture-solutions-pvt-ltd-bengaluru-2-to-6-years-261026922261" target="_blank" class="btn btn-apply">Apply on Company Site ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td><span class="badge score-high">80% Match</span></td>
+            <td><strong>Associate Software Engineer</strong></td>
+            <td>Thomson Reuters</td>
+            <td><span class="tag">Software Eng</span></td>
+            <td><a href="https://www.naukri.com/job-listings-associate-software-engineer-thomson-reuters-india-pvt-ltd-bengaluru-2-to-4-years-041126502920" target="_blank" class="btn btn-apply">Apply on Company Site ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td><span class="badge score-high">80% Match</span></td>
+            <td><strong>Custom Software Engineer</strong></td>
+            <td>Accenture</td>
+            <td><span class="tag">Software Eng</span></td>
+            <td><a href="https://www.naukri.com/job-listings-custom-software-engineer-accenture-solutions-pvt-ltd-bengaluru-2-to-5-years-251126920884" target="_blank" class="btn btn-apply">Apply on Company Site ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td><span class="badge score-high">80% Match</span></td>
+            <td><strong>Custom Software Engineer</strong></td>
+            <td>Accenture</td>
+            <td><span class="tag">Software Eng</span></td>
+            <td><a href="https://www.naukri.com/job-listings-custom-software-engineer-accenture-solutions-pvt-ltd-bengaluru-2-to-7-years-251126920704" target="_blank" class="btn btn-apply">Apply on Company Site ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td><span class="badge score-high">80% Match</span></td>
+            <td><strong>Custom Software Engineer</strong></td>
+            <td>Accenture</td>
+            <td><span class="tag">Software Eng</span></td>
+            <td><a href="https://www.naukri.com/job-listings-custom-software-engineer-accenture-solutions-pvt-ltd-bengaluru-2-to-7-years-251126920232" target="_blank" class="btn btn-apply">Apply on Company Site ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td><span class="badge score-high">80% Match</span></td>
+            <td><strong>Senior Backend Engineer</strong></td>
+            <td>Axleweb Technologies</td>
+            <td><span class="tag">Backend</span></td>
+            <td><a href="https://www.naukri.com/job-listings-senior-backend-engineer-axleweb-technologies-bengaluru-2-to-4-years-231126502482" target="_blank" class="btn btn-apply">Apply on Company Site ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td><span class="badge score-high">80% Match</span></td>
+            <td><strong>Custom Software Engineer</strong></td>
+            <td>Accenture</td>
+            <td><span class="tag">Software Eng</span></td>
+            <td><a href="https://www.naukri.com/job-listings-custom-software-engineer-accenture-solutions-pvt-ltd-bengaluru-2-to-5-years-191026917060" target="_blank" class="btn btn-apply">Apply on Company Site ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td><span class="badge score-high">80% Match</span></td>
+            <td><strong>Custom Software Engineer</strong></td>
+            <td>Accenture</td>
+            <td><span class="tag">Software Eng</span></td>
+            <td><a href="https://www.naukri.com/job-listings-custom-software-engineer-accenture-solutions-pvt-ltd-bengaluru-2-to-5-years-191026916945" target="_blank" class="btn btn-apply">Apply on Company Site ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td><span class="badge score-high">80% Match</span></td>
+            <td><strong>Custom Software Engineer</strong></td>
+            <td>Accenture</td>
+            <td><span class="tag">Software Eng</span></td>
+            <td><a href="https://www.naukri.com/job-listings-custom-software-engineer-accenture-solutions-pvt-ltd-bengaluru-2-to-5-years-191026917184" target="_blank" class="btn btn-apply">Apply on Company Site ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td><span class="badge score-high">80% Match</span></td>
+            <td><strong>Custom Software Engineer</strong></td>
+            <td>Accenture</td>
+            <td><span class="tag">Software Eng</span></td>
+            <td><a href="https://www.naukri.com/job-listings-custom-software-engineer-accenture-solutions-pvt-ltd-bengaluru-2-to-5-years-191026917178" target="_blank" class="btn btn-apply">Apply on Company Site ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td><span class="badge score-high">80% Match</span></td>
+            <td><strong>Custom Software Engineer</strong></td>
+            <td>Accenture</td>
+            <td><span class="tag">Software Eng</span></td>
+            <td><a href="https://www.naukri.com/job-listings-custom-software-engineer-accenture-solutions-pvt-ltd-bengaluru-2-to-5-years-191026917176" target="_blank" class="btn btn-apply">Apply on Company Site ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td><span class="badge score-high">80% Match</span></td>
+            <td><strong>Custom Software Engineer</strong></td>
+            <td>Accenture</td>
+            <td><span class="tag">Software Eng</span></td>
+            <td><a href="https://www.naukri.com/job-listings-custom-software-engineer-accenture-solutions-pvt-ltd-bengaluru-2-to-5-years-191026916170" target="_blank" class="btn btn-apply">Apply on Company Site ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td><span class="badge score-high">80% Match</span></td>
+            <td><strong>Custom Software Engineer</strong></td>
+            <td>Accenture</td>
+            <td><span class="tag">Software Eng</span></td>
+            <td><a href="https://www.naukri.com/job-listings-custom-software-engineer-accenture-solutions-pvt-ltd-bengaluru-2-to-3-years-161026923592" target="_blank" class="btn btn-apply">Apply on Company Site ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td><span class="badge score-high">80% Match</span></td>
+            <td><strong>Staff Software Engineer</strong></td>
+            <td>CBA Cross Border Associates</td>
+            <td><span class="tag">Software Eng</span></td>
+            <td><a href="https://www.naukri.com/job-listings-staff-software-engineer-cba-cross-border-associates-bengaluru-2-to-5-years-111126504743" target="_blank" class="btn btn-apply">Apply on Company Site ↗</a></td>
+        </tr>
+        
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-title">🤖 Today's Auto-Applied Naukri Jobs</div>
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Job Title</th>
+                        <th>Company</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:00:41</td>
+            <td><strong>SAP ABAP Consultant-2026</strong></td>
+            <td>Infosys</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-sap-abap-consultant-2026-infosys-hyderabad-ahmedabad-bengaluru-1-to-2-years-191126033101" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:01:06</td>
+            <td><strong>SAP ABAP Technical Consultant-2026</strong></td>
+            <td>Infosys</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-sap-abap-technical-consultant-2026-infosys-hyderabad-ahmedabad-bengaluru-1-to-2-years-191126033080" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:02:10</td>
+            <td><strong>Sap Abap Developer</strong></td>
+            <td>Infosys</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-sap-abap-developer-infosys-kolkata-chennai-bengaluru-2-to-7-years-051126036234" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:02:21</td>
+            <td><strong>Sap Abap Consultant</strong></td>
+            <td>Infosys</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-sap-abap-consultant-infosys-hyderabad-chennai-bengaluru-2-to-7-years-201126029549" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:02:36</td>
+            <td><strong>Sap Abap Consultant</strong></td>
+            <td>SERVICE BASED MNC</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-sap-abap-consultant-sigma-allied-services-hyderabad-pune-bengaluru-2-to-7-years-191126011818" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:02:55</td>
+            <td><strong>SAP ABAP Technical Consultant</strong></td>
+            <td>Infosys</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-sap-abap-technical-consultant-infosys-pune-chennai-bengaluru-2-to-7-years-111126034193" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:04:38</td>
+            <td><strong>Application Support Engineer</strong></td>
+            <td>Xfilespro</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-application-support-engineer-xfilespro-bengaluru-0-to-3-years-280726028341" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:06:04</td>
+            <td><strong>Sap Engineer</strong></td>
+            <td>Aspire Nxt</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-sap-engineer-aspire-nxt-bengaluru-2-to-3-years-231126016560" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:06:42</td>
+            <td><strong>Application Support Engineer</strong></td>
+            <td>Clover Infotech</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-application-support-engineer-clover-infotech-bengaluru-2-to-4-years-251126010726" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:06:53</td>
+            <td><strong>Sr US Payment Analyst</strong></td>
+            <td>Mphasis</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-sr-us-analyst-irfan-ahmed-bengaluru-2-to-7-years-231126017842" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:07:16</td>
+            <td><strong>System Engineer</strong></td>
+            <td>Tanla Platforms</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-system-engineer-tanla-platforms-bengaluru-2-to-4-years-280826005729" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:08:25</td>
+            <td><strong>Consultant - GBS</strong></td>
+            <td>EY</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-consultant-gbs-ey-bengaluru-1-to-6-years-220926007946" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:09:18</td>
+            <td><strong>Application Production Support Analyst</strong></td>
+            <td>Kiya.ai</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-application-production-support-analyst-kiya-ai-bangalore-rural-bengaluru-2-to-5-years-181126026304" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:09:41</td>
+            <td><strong>IICS / Informatica Developer</strong></td>
+            <td>Infosys</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-iics-informatica-developer-infosys-hyderabad-pune-bengaluru-2-to-5-years-070926032744" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:09:52</td>
+            <td><strong>Informatica Powercenter Developer</strong></td>
+            <td>Infosys</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-informatica-powercenter-developer-infosys-hyderabad-pune-bengaluru-2-to-5-years-040926024993" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:10:13</td>
+            <td><strong>Customer Success Manager</strong></td>
+            <td>Fleetx</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-customer-success-manager-fleetx-ahmedabad-bengaluru-2-to-7-years-181126034253" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:10:35</td>
+            <td><strong>ITGC- Consultant</strong></td>
+            <td>Select Source International</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-itgc-consultant-select-source-international-bengaluru-2-to-6-years-250926003981" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:11:22</td>
+            <td><strong>AI Engineer</strong></td>
+            <td>Omnicom Global Solutions</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-ai-engineer-omnicom-media-group-bengaluru-1-to-4-years-171126018087" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:11:51</td>
+            <td><strong>Mulesoft Consultant</strong></td>
+            <td>Bootminds System</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-mulesoft-consultant-bootminds-systems-bengaluru-2-to-3-years-171126010914" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:13:09</td>
+            <td><strong>FTE-Operator (General)</strong></td>
+            <td>Monier Roofing</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-fte-operator-general-monier-roofing-bengaluru-2-to-3-years-161126011292" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:13:59</td>
+            <td><strong>Production Support Analyst</strong></td>
+            <td>Vistaar Finance</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-production-support-analyst-vistaar-finance-bengaluru-2-to-7-years-131126028928" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:14:25</td>
+            <td><strong>Application Support Engineer</strong></td>
+            <td>Clover Infotech</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-application-support-engineer-clover-infotech-bengaluru-2-to-4-years-131126010420" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:15:01</td>
+            <td><strong>IBM ELM Support Engineer</strong></td>
+            <td>Cmex Management</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-ibm-elm-support-engineer-cmex-management-bengaluru-2-to-4-years-101126007891" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:19:18</td>
+            <td><strong>IELTS Demo Trainer - Part Time Consultant (Remote)</strong></td>
+            <td>Leap Finance</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-ielts-demo-trainer-part-time-consultant-remote-leap-finance-bengaluru-1-to-6-years-130826020318" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+        <tr>
+            <td style="font-size: 0.85rem; color: #94a3b8;">2026-11-25 11:21:45</td>
+            <td><strong>Growth And Marketing Manager</strong></td>
+            <td>Wellopia - Esca Consumer Health</td>
+            <td>Bengaluru</td>
+            <td><span class="badge badge-success">APPLIED</span></td>
+            <td><a href="https://www.naukri.com/job-listings-growth-and-marketing-manager-wellopia-esca-consumer-health-bengaluru-2-to-4-years-291026034551" target="_blank" class="btn btn-secondary">View Job ↗</a></td>
+        </tr>
+        
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
