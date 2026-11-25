@@ -150,7 +150,7 @@ def load_applied_urls():
 def boost_profile(page, config, dry_run=False):
     print("\n[PROFILE BOOST] Navigating to Naukri Profile...")
     target_headline = config.get("user_profile", {}).get(
-        "headline", "DevOps Engineer & Backend Developer (Python / FastAPI / PostgreSQL)"
+        "headline", "SAP ABAP Consultant | Core ABAP | RICEF | CDS Views | OData | ABAP on HANA"
     )
     
     try:
@@ -342,7 +342,7 @@ def apply_to_jobs(page, config, dry_run=False, force_rerun=False):
     applied_urls = load_applied_urls()
 
     daily_limit = config.get("daily_apply_limit", 100)
-    keywords = config.get("keywords", ["Backend Developer", "DevOps Engineer", "FastAPI Developer", "Python Developer", "MLOps Engineer"])
+    keywords = config.get("keywords", ["SAP ABAP Consultant", "SAP ABAP Developer", "ABAP on HANA", "SAP S/4HANA ABAP"])
     negative_keywords = config.get("negative_keywords", ["Java", "Spring", "C++", ".NET", "ASP.NET", "C#", "PHP", "Angular", "Ruby", "Android", "iOS"])
     locations = config.get("locations", ["Bangalore"])
     exp = config.get("experience_years", 2)

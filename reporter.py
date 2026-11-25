@@ -50,8 +50,8 @@ def generate_report():
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
     config = load_config()
     profile = config.get("user_profile", {})
-    candidate_name = profile.get("name", "S Gokul Krishna")
-    candidate_headline = profile.get("headline", "DevOps Engineer & Backend Developer")
+    candidate_name = profile.get("name", "Gnana Kumar S")
+    candidate_headline = profile.get("headline", "SAP ABAP Consultant")
 
     today_str = datetime.now().strftime("%Y-%m-%d")
     now_formatted = datetime.now().strftime("%B %d, %Y - %I:%M %p")

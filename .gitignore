@@ -2,10 +2,16 @@
 auth/storage_state.json
 auth/*.json
 
-# Ignore local database and python cache
+# Resume and local profile data
+*.pdf
+profile_snapshot.json
+inspect_naukri_profile.py
+
+# Ignore local database and Python cache
 *.db
 __pycache__/
 *.pyc
+.venv/
 
 # Ignore OS files
 .DS_Store
